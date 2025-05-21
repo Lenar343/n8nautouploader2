@@ -31,7 +31,7 @@ form.addEventListener('submit', async function (e) {
   formData.append('text', text);
   formData.append('photo', imageFile);
 
-  const response = await fetch('https://lenalt343.app.n8n.cloud/webhook/post-social', {
+  const response = await fetch('https://lenalt343.app.n8n.cloud/webhook-test/post-social', {
     method: 'POST',
     body: formData
   });
@@ -52,7 +52,7 @@ document.getElementById('postInstagramContent').addEventListener('click', async 
   formData.append('text', text);
   formData.append('photo', imageFile);
 
-  const response = await fetch('https://lenalt343.app.n8n.cloud/webhook/post-social', {
+  const response = await fetch('https://lenalt343.app.n8n.cloud/webhook-test/post-social', {
     method: 'POST',
     body: formData
   });
