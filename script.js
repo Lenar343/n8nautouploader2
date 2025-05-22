@@ -37,8 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('Response from n8n:', resultText);
       if (response.ok) {
         alert('Posted successfully!');
-        quill.setContents([]); // Clear Quill editor
-        document.getElementById('imageInput').value = ''; // Clear file input
       } else {
         alert('Failed to post. See console.');
       }
