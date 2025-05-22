@@ -5,23 +5,15 @@
   <title>Post to Social</title>
   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Add this directly or in style.css */
-    #editor {
-      height: 200px;
-      background-color: #fff;
-    }
-    .ql-container {
-      min-height: 150px;
-    }
-  </style>
 </head>
 <body>
 
 <h2>Post to LinkedIn & Instagram</h2>
 
 <form id="postForm">
-  <div id="editor" class="quill-editor"></div> <!-- ADD A CLASS -->
+  <div id="editor-container">
+    <div id="editor"></div>
+  </div>
   <br>
   <input type="file" id="imageInput" accept="image/*" required>
   <br><br>
