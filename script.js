@@ -6,37 +6,45 @@ document.addEventListener('DOMContentLoaded', function () {
       toolbar: [['bold', 'italic', 'underline'], [{ list: 'bullet' }], ['link']]
     }
   });
-
   const form = document.getElementById('postForm');
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
-
     const text = quill.root.innerHTML;
+    if (!text.trim() || text === '<p><br></p>') {
+      alert('Please enter some text before posting.');
+      return;
+    }
+    
     const imageFile = document.getElementById('imageInput')?.files?.[0];
-
     const formData = new FormData();
     formData.append('text', text);
     if (imageFile) {
       formData.append('photo', imageFile);
     }
-
+    
+    // Debug: Log FormData contents
+    console.log('FormData contents:');
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    
     try {
       const response = await fetch('https://lenalt343.app.n8n.cloud/webhook/post-social', {
         method: 'POST',
         body: formData
       });
-
       const resultText = await response.text();
       console.log('Response from n8n:', resultText);
-
       if (response.ok) {
-        alert('✅ Posted successfully!');
+        alert('Posted successfully!');
+        quill.setContents([]); // Clear Quill editor
+        document.getElementById('imageInput').value = ''; // Clear file input
       } else {
-        alert('⚠️ Failed to post. See console.');
+        alert('Failed to post. See console.');
       }
     } catch (error) {
-      console.error('❌ Network or fetch error:', error);
-      alert('❌ Something went wrong. See console for details.');
+      console.error('Network or fetch error:', error);
+      alert('Something went wrong. See console for details.');
     }
   });
 });
