@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const text = quill.root.innerHTML;
     console.log("Form submitted with:", text);
 
-    const response = await fetch('https://lenalt343.app.n8n.cloud/webhook/post-social', {
+    const response = await fetch('https://lenalt343.app.n8n.cloud/webhook-test/post-social', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
