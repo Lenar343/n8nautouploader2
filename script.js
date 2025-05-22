@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     try {
-      const response = await fetch('https://lenalt343.app.n8n.cloud/webhook-test/post-social', {
+      const response = await fetch('https://lenalt343.app.n8n.cloud/webhook/post-social', {
         method: 'POST',
         body: formData
       });
