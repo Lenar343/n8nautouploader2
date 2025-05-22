@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     try {
-      const response = await fetch('https://lenalt343.app.n8n.cloud/webhook/3c2ca73d-10d4-4aed-985b-78eaebf76882', {
+      const response = await fetch('https://lenalt343.app.n8n.cloud/webhook/n8n-auto-posting-data', {
         method: 'POST',
         body: formData
       });
