@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>N8N Web Client</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <!-- URL Input Section -->
+  <div class="post-url">
+    <input type="text" id="urlInput" placeholder="Enter URL here">
+    <button onclick="postURL()">POST</button>
+  </div>
+
+  <!-- Text Editor Section -->
+  <div class="editor-toolbar">
+    <button onclick="formatText('bold')">Bold</button>
+    <button onclick="highlightText()">Highlight</button>
+    <button onclick="insertList()">• List</button>
+    <button onclick="insertEmoji()">😀</button>
+  </div>
+
+  <textarea id="textInput" placeholder="Enter or paste your text here..."></textarea>
+^
+  <!-- Text Editor Section -->
+  <div class="editor-toolbar">
+    <button onclick="formatText('bold')">Bold</button>
+    <button onclick="highlightText()">Highlight</button>
+    <button onclick="insertList()">• List</button>
+    <button onclick="insertEmoji()">😀</button>
+  </div>
+
+  <textarea id="textResult" placeholder="AI Enhanced result will apear here..."></textarea>
+
+  <div class="post-text">
+    <button onclick="postText(WS_AI_TEXT)">POST</button>
+    <button onclick="deleteRecord()">DELETE</button>
+  </div>
+</div>
+<script src="index.js"></script>
+</body>
+</html>

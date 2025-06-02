@@ -1,0 +1,55 @@
+body {
+  font-family: sans-serif;
+  padding: 20px;
+  background: #f7f7f7;
+}
+.container {
+  max-width: 800px;
+  margin: auto;
+}
+.url-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+#urlInput {
+  flex: 1;
+  padding: 12px;
+  font-size: 16px;
+}
+textarea#textInput {
+  width: 100%;
+  height: 100px;
+  padding: 15px;
+  font-size: 16px;
+  margin-top: 10px;
+  resize: vertical;
+}
+textarea#textResult {
+  width: 100%;
+  height: 200px;
+  padding: 15px;
+  font-size: 16px;
+  margin-top: 10px;
+  resize: vertical;
+}
+.editor-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 5px;
+}
+.editor-toolbar button {
+  padding: 6px 10px;
+  font-size: 14px;
+}
+.editor-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+.editor-actions button,
+.url-section button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
