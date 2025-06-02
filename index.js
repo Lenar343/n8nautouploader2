@@ -9,28 +9,29 @@ const containerIdMap = {
 };
 
 async function postURL() {
-  const urlInput = document.getElementById('urlInput').value;
+  const url = document.getElementById('urlInput').value;
 
   try {
-    const response = await fetch('https://lenot344.app.n8n.cloud/webhook/url-generate', {
+    const response = await fetch('https://your-n8n-webhook-url.com', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ url: urlInput })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
     });
 
-    // Parse the JSON response
-    const json = await response.json();
-
-    // Show the content in the result textarea
-    document.getElementById('textResult').value = json.content || 'No content returned';
+    // Check for your custom status code (e.g., 299 = final response)
+    if (response.status === 299) {
+      const json = await response.json();
+      document.getElementById('textResult').value = json.content || 'No content returned.';
+    } else {
+      console.warn('Received non-final status:', response.status);
+    }
 
   } catch (error) {
-    console.error('Error sending URL:', error);
+    console.error('Error posting URL:', error);
     document.getElementById('textResult').value = 'Error retrieving content.';
   }
 }
+
 
 
 function postText(table) {
