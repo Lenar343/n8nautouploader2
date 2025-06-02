@@ -12,7 +12,7 @@ async function postURL() {
   const urlInput = document.getElementById('urlInput').value;
 
   try {
-    const response = await fetch('https://your-n8n-webhook-url.com', {
+    const response = await fetch('https://lenot344.app.n8n.cloud/webhook/url-generate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
