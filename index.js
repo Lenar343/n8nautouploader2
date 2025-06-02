@@ -12,7 +12,7 @@ async function postURL() {
   const url = document.getElementById('urlInput').value;
 
   try {
-    const response = await fetch('https://lenot344.app.n8n.cloud/webhook/url-generate', {
+    const response = await fetch('https://your-n8n-webhook-url.com', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url })
@@ -47,6 +47,32 @@ function postText(table) {
   .then(res => res.json())
   .then(data => alert('Posted!'))
   .catch(err => console.error(err));
+}
+
+async function generateArticles(WS_AI) {
+  try {
+    const res = await fetch('https://lenot344.app.n8n.cloud/webhook/generate-articles', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ WS_AI }),
+    });
+
+    // Only act if the response is marked as final
+    if (response.status === 299) {
+      const json = await response.json();
+      document.getElementById('textResult').value = json["Content"] || 'No content';
+      console.log("ID:", json.id);
+      console.log("Title:", json["Name/ID"]);
+      console.log("Created:", json["Created time"]);
+      console.log("Content:", json["Content"]);
+    }
+
+    // All other status codes are ignored silently
+
+  } catch (error) {
+    console.error('Error posting URL:', error);
+    document.getElementById('textResult').value = 'Error retrieving content.';
+  }
 }
 
 function deleteRecord(table) {
