@@ -18,21 +18,19 @@ async function postURL() {
       body: JSON.stringify({ url })
     });
 
-    // Check for your custom status code (e.g., 299 = final response)
+    // Only act if the response is marked as final
     if (response.status === 299) {
       const json = await response.json();
-      document.getElementById('textResult').value = json.content || 'No content returned.';
-    } else {
-      console.warn('Received non-final status:', response.status);
+      document.getElementById('textResult').value = json.content || 'No content';
     }
+
+    // All other status codes are ignored silently
 
   } catch (error) {
     console.error('Error posting URL:', error);
     document.getElementById('textResult').value = 'Error retrieving content.';
   }
 }
-
-
 
 function postText(table) {
   const text = document.getElementById('textInput').value;
