@@ -1,44 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>N8N Web Client</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>N8N Web Client</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="index.js"></script>
 </head>
 <body>
-<div class="container">
-  <!-- URL Input Section -->
-  <div class="post-url">
-    <input type="text" id="urlInput" placeholder="Enter URL here">
-    <button onclick="postURL()">POST</button>
+  <div class="container">
+    <div class="url-section">
+      <input type="text" id="urlInput" placeholder="Enter URL here">
+      <button onclick="generateURL()">GENERATE FROM LINK</button>
+    </div>
+    <div class="editor-toolbar">
+      <button onclick="formatText('bold')">Bold</button>
+      <button onclick="insertList()">• List</button>
+      <button onclick="insertEmoji()"></button>
+    </div>
+    <label class="switch">
+      <input type="checkbox">
+      <span class="slider round"></span>
+    </label>
+    
+    <!-- New Dropdown Section -->
+    <div class="dropdown-section">
+      <label for="dropdown">Select an option:</label>
+      <select id="dropdown" name="dropdown" required>
+        <option value="">Loading options...</option>
+      </select>
+    </div>
+    
+    <textarea id="textInput" placeholder="Enter or paste your text here..."></textarea>
+    <div style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+        <button onclick="generateText()">GENERATE FROM TEXT</button>
+        <button onclick="submitTextWithDropdown()">SEND TEXT WITH OPTION</button>
+        <label style="display: flex; align-items: center; font-size: 14px;">
+          <input type="checkbox" id="negativeToggle" style="margin-right: 5px;">
+          Business post (default is narrative)
+        </label>
+      </div>
+    </div>
+    <div class="result-wrapper">
+      <div class="result-toolbar">
+        <button onclick="generateArticles()">GENERATE FROM WEB</button>
+      </div>
+      
+      
+      <div class="post-actions">
+        <textarea id="textResult" placeholder="AI Enhanced result will appear here..."></textarea>
+        <button onclick="deleteRecord()">DELETE</button>
+      </div>
+    </div>
   </div>
+  
+  <script>
+    // Load dropdown options on page load
+    async function loadDropdownOptions() {
+      try {
+        const response = await fetch('/api/dropdown-options', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch dropdown options');
+        }
+        
+        const options = await response.json();
+        const dropdown = document.getElementById('dropdown');
+        
+        // Clear loading option
+        dropdown.innerHTML = '<option value="">Select an option...</option>';
+        
+        // Add fetched options to dropdown
+        options.forEach(option => {
+          const optionElement = document.createElement('option');
+          optionElement.value = option.value || option.id;
+          optionElement.textContent = option.label || option.name || option.value;
+          dropdown.appendChild(optionElement);
+        });
+        
+      } catch (error) {
+        console.error('Error loading dropdown options:', error);
+        const dropdown = document.getElementById('dropdown');
+        dropdown.innerHTML = '<option value="">Error loading options</option>';
+      }
+    }
 
-  <!-- Text Editor Section -->
-  <div class="editor-toolbar">
-    <button onclick="formatText('bold')">Bold</button>
-    <button onclick="highlightText()">Highlight</button>
-    <button onclick="insertList()">• List</button>
-    <button onclick="insertEmoji()">😀</button>
-  </div>
+    // Function to submit text with dropdown selection
+    async function submitTextWithDropdown() {
+      const textInput = document.getElementById('textInput').value;
+      const selectedDropdown = document.getElementById('dropdown').value;
+      
+      if (!textInput || !selectedDropdown) {
+        alert('Please fill in both text and select an option');
+        return;
+      }
 
-  <textarea id="textInput" placeholder="Enter or paste your text here..."></textarea>
-^
-  <!-- Text Editor Section -->
-  <div class="editor-toolbar">
-    <button onclick="formatText('bold')">Bold</button>
-    <button onclick="highlightText()">Highlight</button>
-    <button onclick="insertList()">• List</button>
-    <button onclick="insertEmoji()">😀</button>
-  </div>
+      const formData = {
+        text: textInput,
+        dropdown: selectedDropdown
+      };
 
-  <textarea id="textResult" placeholder="AI Enhanced result will apear here..."></textarea>
+      try {
+        const response = await fetch('/api/submit-form', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
 
-  <div class="post-text">
-    <button onclick="postText(WS_AI_TEXT)">POST</button>
-    <button onclick="deleteRecord()">DELETE</button>
-  </div>
-</div>
-<script src="index.js"></script>
+        if (!response.ok) {
+          throw new Error('Failed to submit form');
+        }
+
+        const result = await response.json();
+        document.getElementById('textResult').value = 
+          `Success! Response: ${JSON.stringify(result, null, 2)}`;
+        
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        document.getElementById('textResult').value = 
+          `Error: ${error.message}`;
+      }
+    }
+
+    // Load dropdown options when page loads
+    document.addEventListener('DOMContentLoaded', loadDropdownOptions);
+  </script>
+  
+  <script src="index.js"></script>
 </body>
 </html>
